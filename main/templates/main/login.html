@@ -11,6 +11,16 @@
         {% csrf_token %}
         <label>Username:</label><input type="text" name="username" required><br>
         <label>Password:</label><input type="password" name="password" required><br>
+        <div class="password-instructions">
+            <p>Password must contain:</p><br>
+            <ul>
+                <li>At least 8 characters</li>
+                <li>At least one uppercase letter</li>
+                <li>At least one lowercase letter</li>
+                <li>At least one number</li>
+                <li>At least one special character (e.g., @, #, $, etc.)</li><br>
+            </ul>
+        </div>
         <button type="submit">Login</button>
     </form>
     <a href="{% url 'register' %}">Don't have an account? Register</a>
