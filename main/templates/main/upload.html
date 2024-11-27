@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Signature</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Signature Verification</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Source of Image:</label>
+        <select name="source">
+            <option value="Bank Document">Bank Document</option>
+            <option value="Government Document">Government Document</option>
+        </select><br>
+        <label>Upload Signature Image:</label>
+        <input type="file" name="image" accept=".jpg,.jpeg,.png" required><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if uploaded_file_url %}
+        <h2>Uploaded Image</h2>
+        <img src="{{ uploaded_file_url }}" alt="Uploaded Image" style="max-width: 400px;"><br>
+
+        <h2>Prediction Results</h2>
+        <table border="1" style="border-collapse: collapse; width: 100%; text-align: center;">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Label</th>
+                    <th>Accuracy</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prediction in predictions %}
+                <tr>
+                    <td>{{ prediction.model }}</td>
+
+                    <td>{{ prediction.label }}</td>
+                    <td>{{ prediction.accuracy }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>
